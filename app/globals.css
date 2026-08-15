@@ -1,0 +1,14 @@
+/* Global entry — page CSS lives under /styles and is imported by page agents. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* Black bleed for overscroll / rubber-band above the home hero + transparent nav */
+  background-color: #000;
+}

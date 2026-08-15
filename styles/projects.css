@@ -1,0 +1,665 @@
+.projects-cover{
+    position: fixed;
+    width: 100%;
+}
+.projects-main{
+    background-color: white;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 40px 40px 0 0;
+    padding: 40px 0;
+}
+.image-cover2{
+    height: 80vh;
+}
+.projects-title{
+    text-align: center;
+    margin: 0;
+    font-size: 65px;
+    font-weight: 900;
+}
+.projects-title-container{
+    position: absolute;
+    padding: 15px 70px 20px;
+    color: white;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #3a3a3aa3;
+    border-radius: 50px;
+}
+.cta-background {
+    background-size: cover;
+    background-position: center center;
+    bottom: 0;
+    filter: blur(50px);
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.p_container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.project-container{
+    position: relative;
+    z-index: 4;
+    margin: 60px 0;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Create 3 columns */
+    gap: 30px 100px;
+}
+
+.cta {
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.2);
+    height: 335px;
+    overflow: hidden;
+    position: relative;
+    width: 500px;
+    transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cta:hover {
+    box-shadow: 6px 10px 28px rgba(0, 0, 0, 0.28);
+}
+.cta:hover > .p_img{
+    top: -10%;
+    filter: brightness(70%);
+}
+.cta:hover > .p_body{
+    bottom: 0;
+    opacity: 1;
+}
+
+.p_img {
+    border-radius: 30px;
+    bottom: 0;
+    filter: brightness(100%);
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition:
+        top 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    height: 110%;
+    will-change: top, filter;
+}
+
+.p_body {
+    bottom: -40%;
+    padding: 15px;
+    position: absolute;
+    opacity: 0.92;
+    transition:
+        bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: bottom, opacity;
+}
+.p_title {
+    color: #fff;
+    display: inline-block;
+    font-weight: 300;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.p_desc {
+    color: #fff;
+    font-weight: 300;
+}
+/*####### Notch For Projects Pages Slider#######*/
+.radio-button-container {
+    border-radius: 40px;
+    background-color: #3a3a3aa3;
+    margin: 0 auto;
+    width: max-content;
+    padding: 11px 11px 11px 11px;
+    display: flex;
+    gap: 10px;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.radio-button {
+    position: relative;
+    cursor: pointer;
+    width: max-content;
+    height: 20px;
+}
+
+.radio-button__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-button__label {
+    margin-bottom: 0;
+    width: max-content;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    color: #f2f2f2;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.radio-button__custom {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #454545;
+    transition:
+        transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1),
+        border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.radio-checked{
+    background-color: #ff883d;
+    border-color: transparent;
+    transform: scale(0.8);
+    box-shadow: 0 0 2px #ff883d82;
+}
+
+.radio-button__input:checked + .radio-button__label .radio-button__custom {
+    background-color: #ff883d;
+    border-color: transparent;
+    transform: scale(0.8);
+    box-shadow: 0 0 2px #ff883d82;
+}
+
+.radio-button__label:hover .radio-button__custom {
+    transform: scale(1.2);
+    border-color: #ff883d;
+    box-shadow: 0 0 7px #ff883d82;
+}
+.zoomAnim{
+    border-radius: 30px;
+    transform: scale(0.88);
+    opacity: 0;
+    transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+}
+.zoom-animate{
+    transform: scale(1);
+    opacity: 1;
+}
+/*##############################################*/
+/*####### Notch For Criteria Selector #######*/
+.criteria-notch-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+}
+/*
+  Beat Bootstrap .container width (CDN loads after Next CSS in App Router).
+  Without this, ≥1200px row layout stretches criteria to ~1170px and parks Sort By at the far right.
+*/
+.criteria-notch-container > .container.criteria-container,
+.criteria-notch-container .criteria-container {
+    display: flex;
+    flex: 0 0 auto;
+    max-width: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 15px;
+}
+
+.criteria-card {
+    border: solid white;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(7px);
+    border-radius: 30px;
+    padding: 2rem;
+    margin: 1rem;
+    width: 250px;
+    transform: scale(1);
+    transition:
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.28s ease;
+}
+
+.criteria-card:hover{
+    border: solid #ff883d;
+    box-shadow: 0 10px 36px 0 rgba(31, 38, 135, 0.42);
+}
+
+.criteria-card-clicked{
+    border: solid #ff883d;
+    transform: scale(1.07);
+}
+
+.criteria-title {
+    /* Hammersmith One is sans; sans-serif fallback avoids Times when font is slow/missing */
+    font-family: 'Hammersmith One', sans-serif !important;
+    font-size: 22px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    margin: 1rem auto;
+}
+.sort-dropdown{
+    position: relative;
+    z-index: 5;
+    flex: 0 0 auto;
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.sortby{
+    font-family: 'Hammersmith One', sans-serif !important;
+    font-size: 20px;
+    width: max-content;
+}
+.sort-criteria{
+    font-family: 'Hammersmith One', sans-serif !important;
+    font-weight: 100;
+    font-size: 14px;
+}
+.arrow{
+    rotate: 0deg;
+    transition: rotate 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#criteria-selected{
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.removeSort{
+    opacity: 0;
+    background-color: #d9d9d9;
+    border-radius: 50px;
+    font-size: 12px;
+    padding: 8px 6px 6px;
+    cursor: pointer;
+    margin-left: 8px;
+    transition:
+        opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 0.25s ease,
+        margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+        max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Collapse clear-control when hidden so we don't need Django's -36px pull-in */
+.removeSort.is-collapsed{
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+.removeSort:hover{
+    transform: scale(1.06);
+    background-color: #cfcfcf;
+}
+.popup:hover .arrow {
+    animation: slide-in-bottom .3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@keyframes slide-in-bottom {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-2px);
+    }
+}
+/* Sort By Dropdown */
+.popup {
+    user-select: none;
+    --burger-line-width: 1.125em;
+    --burger-line-height: 0.125em;
+    --burger-offset: 0.625em;
+    --burger-bg: rgba(0, 0, 0, .15);
+    --burger-color: #333;
+    --burger-line-border-radius: 0.1875em;
+    --burger-diameter: 2.125em;
+    --burger-btn-border-radius: calc(var(--burger-diameter) / 2);
+    --burger-line-transition: .3s;
+    --burger-transition: all .1s ease-in-out;
+    --burger-hover-scale: 1.1;
+    --burger-active-scale: .95;
+    --burger-enable-outline-color: var(--burger-bg);
+    --burger-enable-outline-width: 0.125em;
+    --burger-enable-outline-offset: var(--burger-enable-outline-width);
+    /* nav */
+    --nav-padding-x: 0.25em;
+    --nav-padding-y: 0.625em;
+    --nav-border-radius: 0.375em;
+    --nav-border-color: #ccc;
+    --nav-border-width: 0.0625em;
+    --nav-shadow-color: rgba(0, 0, 0, .2);
+    --nav-shadow-width: 0 1px 5px;
+    --nav-bg: #eee;
+    --nav-font-family: Menlo, Roboto Mono, monospace;
+    --nav-default-scale: .8;
+    --nav-active-scale: 1.1;
+    --nav-position-left: -40px;
+    --nav-position-right: unset;
+    /* title */
+    --nav-title-size: 0.625em;
+    --nav-title-color: #777;
+    --nav-title-padding-x: 1rem;
+    --nav-title-padding-y: 0.25em;
+    /* nav button */
+    --nav-button-padding-x: 1rem;
+    --nav-button-padding-y: 0.375em;
+    --nav-button-border-radius: 0.375em;
+    --nav-button-font-size: 12px;
+    --nav-button-hover-bg: #6495ed;
+    --nav-button-hover-text-color: #fff;
+    --nav-button-distance: 0.875em;
+    /* underline */
+    --underline-border-width: 0.0625em;
+    --underline-border-color: #ccc;
+    --underline-margin-y: 0.3125em;
+}
+
+/* popup settings 👆 */
+
+.popup {
+    display: inline-block;
+    text-rendering: optimizeLegibility;
+    position: relative;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.popup input {
+    display: none;
+}
+
+.burger {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background: var(--burger-bg);
+    width: var(--burger-diameter);
+    height: var(--burger-diameter);
+    border-radius: var(--burger-btn-border-radius);
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
+    outline: var(--burger-enable-outline-width) solid transparent;
+    outline-offset: 0;
+}
+
+.burger span {
+    height: var(--burger-line-height);
+    width: var(--burger-line-width);
+    background: var(--burger-color);
+    border-radius: var(--burger-line-border-radius);
+    position: absolute;
+    transition: var(--burger-line-transition);
+}
+
+.burger span:nth-child(1) {
+    top: var(--burger-offset);
+}
+
+.burger span:nth-child(2) {
+    bottom: var(--burger-offset);
+}
+
+.burger span:nth-child(3) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.popup-window {
+    transform: scale(var(--nav-default-scale));
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding: var(--nav-padding-y) var(--nav-padding-x);
+    background: var(--nav-bg);
+    font-family: var(--nav-font-family);
+    color: var(--nav-text-color);
+    border-radius: var(--nav-border-radius);
+    box-shadow: var(--nav-shadow-width) var(--nav-shadow-color);
+    border: var(--nav-border-width) solid var(--nav-border-color);
+    top: calc(var(--burger-diameter) + var(--burger-enable-outline-width) + var(--burger-enable-outline-offset)
+                + 0.5rem);
+    left: var(--nav-position-left);
+    right: var(--nav-position-right);
+    transition:
+        opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.popup-window legend {
+    padding: var(--nav-title-padding-y) var(--nav-title-padding-x);
+    margin: 0;
+    color: var(--nav-title-color);
+    font-size: var(--nav-title-size);
+    text-transform: uppercase;
+}
+
+.popup-window ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.popup-window ul button {
+    outline: none;
+    width: 100%;
+    border: none;
+    background: none;
+    display: flex;
+    align-items: center;
+    color: var(--burger-color);
+    font-size: var(--nav-button-font-size);
+    padding: var(--nav-button-padding-y) var(--nav-button-padding-x);
+    white-space: nowrap;
+    border-radius: var(--nav-button-border-radius);
+    cursor: pointer;
+    column-gap: var(--nav-button-distance);
+}
+
+.popup-window ul li:nth-child(1) svg,
+.popup-window ul li:nth-child(2) svg {
+    color: cornflowerblue;
+}
+
+.popup-window ul li:nth-child(4) svg,
+.popup-window ul li:nth-child(5) svg {
+    color: rgb(153, 153, 153);
+}
+
+.popup-window ul li:nth-child(7) svg {
+    color: red;
+}
+
+.popup-window hr {
+    margin: var(--underline-margin-y) 0;
+    border: none;
+    border-bottom: var(--underline-border-width) solid var(--underline-border-color);
+}
+
+/* actions */
+
+.popup-window ul button:hover,
+.popup-window ul button:focus-visible,
+.popup-window ul button:hover svg,
+.popup-window ul button:focus-visible svg {
+    color: var(--nav-button-hover-text-color);
+    background: var(--nav-button-hover-bg);
+}
+
+.burger:hover {
+    transform: scale(var(--burger-hover-scale));
+}
+
+.burger:active {
+    transform: scale(var(--burger-active-scale));
+}
+
+.popup input:checked+.burger span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.popup input:checked+.burger span:nth-child(2) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+
+.popup input:checked+.burger span:nth-child(3) {
+    transform: translateX(calc(var(--burger-diameter) * -1 - var(--burger-line-width)));
+}
+.maximise{
+    transform: scale(var(--nav-active-scale));
+    visibility: visible;
+    opacity: 1;
+}
+/*------------------*/
+/*###########################################*/
+
+/* Mobile: title scale + side inset (page CSS loads after home.css)
+   html font-size is 10px — use px for readable mobile type.
+
+   Next loads layout home.css BEFORE page projects.css, so this file's base
+   `.image-cover2 { height: 80vh }` and `.projects-title-container { top: 45% }`
+   override home.css mobile reductions. Re-assert Django mobile values here
+   (Django loaded home.css last). Without this, mobile keeps an ~80vh spacer
+   under a shorter fixed cover → huge white band before criteria cards. */
+@media (max-width: 575.98px) {
+    .image-cover2 {
+        height: 35vh;
+    }
+
+    .projects-title-container {
+        top: 22%;
+    }
+
+    .container.projects-title-container {
+        width: fit-content !important;
+        max-width: calc(100% - 40px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 10px 18px 12px !important;
+        box-sizing: border-box;
+    }
+
+    .projects-title {
+        font-size: 22px !important;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    .projects-main {
+        padding: 40px 20px;
+        box-sizing: border-box;
+    }
+
+    .projects-cover {
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .criteria-notch-container .container.criteria-container,
+    .criteria-notch-container .criteria-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .criteria-card {
+        width: 100% !important;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box;
+    }
+
+    .criteria-title {
+        font-size: 16px !important;
+    }
+
+    .container.p_container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box;
+    }
+
+    .project-container {
+        width: 100%;
+        gap: 24px;
+        box-sizing: border-box;
+    }
+
+    .cta {
+        width: 100% !important;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 445px) {
+    .image-cover2 {
+        height: 33vh;
+    }
+
+    .projects-title-container {
+        top: 21%;
+    }
+
+    .projects-cover {
+        height: 86vw;
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .projects-title {
+        font-size: 20px !important;
+    }
+
+    .projects-main {
+        padding: 32px 20px;
+    }
+}
