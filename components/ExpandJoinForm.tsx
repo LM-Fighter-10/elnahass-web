@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
   type FormEvent,
@@ -23,6 +24,9 @@ import {
   type FieldErrors,
   type FormField,
 } from "@/lib/validation";
+import { FORM_TOKEN_FIELD, HONEYPOT_FIELD } from "@/lib/spam-constants";
+import { useFormToken } from "@/lib/useFormToken";
+import HoneypotField from "@/components/HoneypotField";
 
 type ExpandJoinFormProps = {
   open: boolean;
@@ -57,6 +61,8 @@ export default function ExpandJoinForm({
   onOpenChange,
 }: ExpandJoinFormProps) {
   const [values, setValues] = useState<FormValues>(EMPTY);
+  const honeypotRef = useRef<HTMLInputElement>(null);
+  const takeToken = useFormToken(open);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [focused, setFocused] = useState<Partial<Record<FormField, boolean>>>(
     {},
@@ -163,6 +169,8 @@ export default function ExpandJoinForm({
       formData.append("email", payload.email);
       formData.append("phone", payload.phone);
       formData.append("outline_desc", payload.desc);
+      formData.append(HONEYPOT_FIELD, honeypotRef.current?.value ?? "");
+      formData.append(FORM_TOKEN_FIELD, await takeToken());
 
       // Keep fetchCustomer for legacy/e2e network expectations; ignore duplicate flag.
       const [, sendRes] = await Promise.all([
@@ -546,6 +554,7 @@ export default function ExpandJoinForm({
                     </div>
                   </div>
                 </div>
+                <HoneypotField ref={honeypotRef} />
                 <div
                   className="d-flex justify-content-center joinus-btn-div2"
                   style={{

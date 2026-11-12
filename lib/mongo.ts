@@ -37,6 +37,10 @@ export type ProjectDoc = Omit<
 export type CustomerDoc = Omit<Customer, "_id" | "createdAt"> & {
   _id?: ObjectId;
   createdAt: Date;
+  ip?: string;
+  userAgent?: string;
+  /** Saved during a global rate-limit spike; no emails were sent. */
+  emailsSkipped?: boolean;
 };
 
 export type SiteSettingsDoc = SiteSettings & {
@@ -246,6 +250,9 @@ export async function insertCustomer(params: {
   email: string;
   phone: string;
   outlineDesc: string;
+  ip?: string;
+  userAgent?: string;
+  emailsSkipped?: boolean;
 }): Promise<{ inserted: boolean; duplicated: boolean }> {
   await ensureContactLeadAllowsRepeats();
   const { customers } = await getCollections();
@@ -255,6 +262,9 @@ export async function insertCustomer(params: {
     phone: params.phone,
     outlineDesc: params.outlineDesc,
     createdAt: new Date(),
+    ...(params.ip ? { ip: params.ip } : {}),
+    ...(params.userAgent ? { userAgent: params.userAgent } : {}),
+    ...(params.emailsSkipped ? { emailsSkipped: true } : {}),
   });
   return { inserted: true, duplicated: false };
 }

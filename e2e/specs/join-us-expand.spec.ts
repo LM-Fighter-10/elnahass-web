@@ -156,8 +156,8 @@ test.describe("join-us-expand", () => {
 
     expect(fetchHit.url()).toContain("/fetchCustomer");
     expect(sendHit.url()).toMatch(/\/send\/?/);
-    expect(hits.fetchHits).toBeGreaterThanOrEqual(1);
-    expect(hits.sendHits).toBeGreaterThanOrEqual(1);
+    await expect.poll(() => hits.fetchHits).toBeGreaterThanOrEqual(1);
+    await expect.poll(() => hits.sendHits).toBeGreaterThanOrEqual(1);
 
     await expect(page.locator("#checkmark2")).toBeVisible({ timeout: 4000 });
   });

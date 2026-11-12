@@ -10,6 +10,8 @@ import {
 /**
  * API contract specs (API-01…08) — Data Agent.
  * Run against Next only: `npm run test:api` (requires seeded Mongo + `npm run dev`).
+ * Start the dev server with CONTACT_EMAIL_DNS_CHECK_DISABLED=1 and
+ * CONTACT_RATE_LIMIT_DISABLED=1 so the spam guard accepts example.com test leads.
  */
 
 const LIST_KEYS = ["id", "name", "type", "img", "desc", "year"] as const;
@@ -106,15 +108,19 @@ test.describe("api-contracts", () => {
   });
 
   test("API-07 POST /send/ allows same email twice", async ({ request }) => {
+    test.setTimeout(30_000);
     const suffix = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
     const payload = {
-      name: `Dup Test ${suffix}`,
+      name: "Dup Test",
       email: `dup-${suffix}@example.com`,
       phone: "01234567890",
       outline_desc: `unique outline ${suffix}`,
     };
 
-    const first = await postSend(request, payload);
+    const first = await postSend(request, {
+      ...payload,
+      form_token: await getFormToken(request),
+    });
     expect(first.ok()).toBeTruthy();
     const firstBody = await first.json();
     expect(firstBody.inserted).toBe(true);
@@ -130,7 +136,10 @@ test.describe("api-contracts", () => {
     );
     expect((await check.json()).customers[0].duplicated).toBe(false);
 
-    const second = await postSend(request, payload);
+    const second = await postSend(request, {
+      ...payload,
+      form_token: await getFormToken(request),
+    });
     expect(second.ok()).toBeTruthy();
     const secondBody = await second.json();
     expect(secondBody.inserted).toBe(true);
@@ -162,6 +171,90 @@ test.describe("api-contracts", () => {
     expect((await check.json()).customers[0].duplicated).toBe(false);
   });
 });
+
+test.describe("api-contracts spam guard", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(
+      testInfo.project.name !== "next-clone",
+      "Spam guard exists only in the Next clone",
+    );
+  });
+
+  const valid = () => ({
+    name: "Spam Guard Tester",
+    email: `guard-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.com`,
+    phone: "01234567890",
+    outline_desc: "A genuine looking project outline",
+  });
+
+  test("SPAM-01 honeypot filled → fake success, nothing inserted", async ({ request }) => {
+    const res = await postSend(request, { ...valid(), website: "http://spam.example" });
+    expect(res.status()).toBe(200);
+    const body = await res.json();
+    expect(body.ok).toBe(true);
+    expect(body.inserted).toBe(false);
+  });
+
+  test("SPAM-02 missing form token → rejected", async ({ request }) => {
+    const res = await postSend(request, valid());
+    expect(res.status()).toBe(400);
+    expect((await res.json()).inserted).toBe(false);
+  });
+
+  test("SPAM-03 token used too fast → rejected", async ({ request }) => {
+    const tokenRes = await request.get("/api/form-token");
+    const { token } = (await tokenRes.json()) as { token: string };
+    const res = await postSend(request, { ...valid(), form_token: token });
+    expect(res.status()).toBe(400);
+  });
+
+  test("SPAM-04 forged token → rejected", async ({ request }) => {
+    const res = await postSend(request, {
+      ...valid(),
+      form_token: `${(Date.now() - 60_000).toString(36)}.abc.forged`,
+    });
+    expect(res.status()).toBe(400);
+  });
+
+  test("SPAM-05 link / emoji / digits in name → rejected", async ({ request }) => {
+    const res = await postSend(request, {
+      name: "* * * ✨ over 13,202 people — tap http://reelshub.ru/go-bvb.php?txplmc 🔑 * * *",
+      email: "kjppvpimhgg@1win.xyz",
+      phone: "264545310625",
+      outline_desc: "u621l3",
+    });
+    expect(res.status()).toBe(400);
+    expect((await res.json()).inserted).toBe(false);
+  });
+
+  test("SPAM-06 link in description → rejected", async ({ request }) => {
+    const res = await postSend(request, {
+      ...valid(),
+      outline_desc: "great offer at www.example.ru/promo",
+    });
+    expect(res.status()).toBe(400);
+  });
+
+  test("SPAM-07 cross-site origin → 403", async ({ request }) => {
+    const res = await request.post("/send/", {
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        origin: "https://evil.example",
+      },
+      data: new URLSearchParams(valid()).toString(),
+    });
+    expect(res.status()).toBe(403);
+  });
+});
+
+/** Fetch a signed form token and wait past the server's minimum age. */
+async function getFormToken(request: APIRequestContext): Promise<string> {
+  const res = await request.get("/api/form-token");
+  expect(res.ok()).toBeTruthy();
+  const { token } = (await res.json()) as { token: string };
+  await new Promise((r) => setTimeout(r, 3_300));
+  return token;
+}
 
 async function postSend(
   request: APIRequestContext,
